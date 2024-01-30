@@ -1,8 +1,8 @@
-package entity.animals;
+package entity;
 
 import entity.Entity;
 
-abstract class Animal extends Entity {
+public abstract class Animal extends Entity {
 
     private int movementSpeed;
     private int amountFoodForSatiety;

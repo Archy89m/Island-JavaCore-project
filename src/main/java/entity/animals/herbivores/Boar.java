@@ -1,4 +1,4 @@
 package entity.animals.herbivores;
 
-public class Cow {
+public class Boar {
 }
