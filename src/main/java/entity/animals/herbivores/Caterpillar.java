@@ -2,7 +2,8 @@ package entity.animals.herbivores;
 
 import entity.animals.Herbivore;
 
-public class Horse extends Herbivore {
+public class Caterpillar extends Herbivore {
+
     @Override
     public void eat(Object food) {
 

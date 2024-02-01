@@ -1,4 +1,20 @@
 package entity.animals.predators;
 
-public class Wolf {
+import entity.animals.Predator;
+
+public class Wolf extends Predator {
+    @Override
+    public void eat(Object food) {
+
+    }
+
+    @Override
+    public void move() {
+
+    }
+
+    @Override
+    public void reproduce() {
+
+    }
 }

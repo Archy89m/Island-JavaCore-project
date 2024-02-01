@@ -1,4 +1,20 @@
 package entity.animals.herbivores;
 
-public class Rabbit {
+import entity.animals.Herbivore;
+
+public class Rabbit extends Herbivore {
+    @Override
+    public void eat(Object food) {
+
+    }
+
+    @Override
+    public void move() {
+
+    }
+
+    @Override
+    public void reproduce() {
+
+    }
 }

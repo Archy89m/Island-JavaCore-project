@@ -1,6 +1,7 @@
 package entity;
 
 import entity.Entity;
+import providers.SettingsProvider;
 
 public abstract class Animal extends Entity {
 
@@ -12,5 +13,25 @@ public abstract class Animal extends Entity {
     public abstract void move();
 
     public abstract void reproduce();
+
+    public Animal() {
+
+        super();
+
+        this.movementSpeed = SettingsProvider.getCharacteristics(
+                this.getClass().getSimpleName(),
+                "movementSpeed").intValue();
+        this.amountFoodForSatiety = SettingsProvider.getCharacteristics(
+                this.getClass().getSimpleName(),
+                "amountFoodForSatiety").intValue();
+    }
+
+    public int getMovementSpeed() {
+        return movementSpeed;
+    }
+
+    public int getAmountFoodForSatiety() {
+        return amountFoodForSatiety;
+    }
 
 }

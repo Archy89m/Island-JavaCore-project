@@ -2,5 +2,8 @@ package entity.animals;
 
 import entity.Animal;
 
-abstract class Herbivore extends Animal {
+public abstract class Herbivore extends Animal {
+    public Herbivore() {
+        super();
+    }
 }

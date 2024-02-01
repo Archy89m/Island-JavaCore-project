@@ -1,0 +1,78 @@
+Wolf:
+  weight: 50
+  maxOnCell: 30
+  movementSpeed: 3
+  amountFoodForSatiety: 8
+Snake:
+  weight: 15
+  maxOnCell: 30
+  movementSpeed: 1
+  amountFoodForSatiety: 3
+Fox:
+  weight: 8
+  maxOnCell: 30
+  movementSpeed: 2
+  amountFoodForSatiety: 2
+Bear:
+  weight: 500
+  maxOnCell: 5
+  movementSpeed: 2
+  amountFoodForSatiety: 80
+Eagle:
+  weight: 6
+  maxOnCell: 20
+  movementSpeed: 3
+  amountFoodForSatiety: 1
+Horse:
+  weight: 400
+  maxOnCell: 20
+  movementSpeed: 4
+  amountFoodForSatiety: 60
+Deer:
+  weight: 300
+  maxOnCell: 20
+  movementSpeed: 4
+  amountFoodForSatiety: 50
+Rabbit:
+  weight: 2
+  maxOnCell: 150
+  movementSpeed: 2
+  amountFoodForSatiety: 0.45
+Mouse:
+  weight: 0.05
+  maxOnCell: 500
+  movementSpeed: 1
+  amountFoodForSatiety: 0.01
+Goat:
+  weight: 60
+  maxOnCell: 140
+  movementSpeed: 3
+  amountFoodForSatiety: 10
+Sheep:
+  weight: 70
+  maxOnCell: 140
+  movementSpeed: 3
+  amountFoodForSatiety: 15
+Boar:
+  weight: 400
+  maxOnCell: 50
+  movementSpeed: 2
+  amountFoodForSatiety: 50
+Buffalo:
+  weight: 700
+  maxOnCell: 10
+  movementSpeed: 3
+  amountFoodForSatiety: 100
+Duck:
+  weight: 1
+  maxOnCell: 200
+  movementSpeed: 4
+  amountFoodForSatiety: 0.15
+Caterpillar:
+  weight: 0.01
+  maxOnCell: 1000
+  movementSpeed: 0
+  amountFoodForSatiety: 0
+Plant:
+  weight: 1
+  maxOnCell: 200
