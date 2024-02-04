@@ -1,13 +1,25 @@
 package org.island;
 
 
-import providers.AnimalFactory;
+import java.time.LocalTime;
 
 public class App {
     public static void main(String[] args) {
 
-        AnimalFactory.createAnimalsFromPackage("entity.animals.herbivores");
-        //List<Animal> animals = AnimalFactory.createAnimals();
+        Island island = new Island();
+        island.displayStatistics();
+
+        island.startSimulation();
+
+        try {
+            Thread.sleep(1000 * 30);
+            System.out.println("Stopping the game " + LocalTime.now());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        island.stopSimulation();
 
     }
+
 }
