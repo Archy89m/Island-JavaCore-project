@@ -1,13 +1,7 @@
 package org.island;
 
-import entity.Entity;
-
-import java.lang.reflect.Field;
-import java.text.NumberFormat;
+import statistics.StatisticsTask;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -16,8 +10,8 @@ public class Island {
 
     private final int rows = 20;
     private final int cols = 100;
-    private Location[][] locations;
-    private ScheduledExecutorService statisticsScheduler;
+    private final Location[][] locations;
+    private final ScheduledExecutorService statisticsScheduler;
 
     public Island() {
         System.out.println("Start game - " + LocalTime.now());
@@ -26,6 +20,18 @@ public class Island {
         System.out.println("Island created - " + LocalTime.now());
         System.out.println();
         this.statisticsScheduler = Executors.newScheduledThreadPool(1);
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public int getCols() {
+        return cols;
+    }
+
+    public Location[][] getLocations() {
+        return locations;
     }
 
     private void initializeLocations() {
@@ -40,59 +46,14 @@ public class Island {
         return locations[row][col];
     }
 
-    public void displayStatistics() {
-
-        Map<Class<?>, Integer> plantsCountMap = new HashMap<>();
-        Map<Class<?>, Integer> herbivoresCountMap = new HashMap<>();
-        Map<Class<?>, Integer> predatorsCountMap = new HashMap<>();
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                Location location = locations[i][j];
-                for (Entity entity : location.getEntities()) {
-                    Class<?> clazz = entity.getClass();
-                    if (clazz.getName().contains("Plant")) {
-                        plantsCountMap.put(clazz, plantsCountMap.getOrDefault(clazz, 0) + 1);
-                    } else if (clazz.getName().contains("herbivores")) {
-                        herbivoresCountMap.put(clazz, herbivoresCountMap.getOrDefault(clazz, 0) + 1);
-                    } else if (clazz.getName().contains("predators")) {
-                        predatorsCountMap.put(clazz, predatorsCountMap.getOrDefault(clazz, 0) + 1);
-                    }
-                }
-            }
-        }
-
-        System.out.println("Statistics " + LocalTime.now());
-        System.out.print("Plants: ");
-        displayEntities(plantsCountMap);
-        System.out.print("Herbivores: ");
-        displayEntities(herbivoresCountMap);
-        System.out.print("Predators: ");
-        displayEntities(predatorsCountMap);
-        System.out.println();
-    }
-
-    public void displayEntities(Map<Class<?>, Integer> entities) {
-
-        for (Map.Entry<Class<?>, Integer> entry : entities.entrySet()) {
-            try {
-                Field field = entry.getKey().getDeclaredField("emoji");
-                field.setAccessible(true);
-                String emoji = (String) field.get(null);
-                NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
-                System.out.print(emoji + " " + numberFormat.format(entry.getValue()) + "|");
-            } catch (NoSuchFieldException | IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        System.out.println();
-    }
-
     public void startSimulation() {
-        statisticsScheduler.scheduleAtFixedRate(this::displayStatistics, 6, 6, TimeUnit.SECONDS);
+        StatisticsTask statisticsTask = new StatisticsTask(this);
+        statisticsScheduler.scheduleAtFixedRate(statisticsTask, 1, 6, TimeUnit.SECONDS);
     }
 
     public void stopSimulation() {
         statisticsScheduler.shutdown();
     }
+
+
 }
