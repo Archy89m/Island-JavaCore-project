@@ -1,17 +1,16 @@
 package org.island;
 
-import statistics.StatisticsTask;
+import executors.EntityActionExecutor;
+import executors.StatisticsExecutor;
 import java.time.LocalTime;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class Island {
 
-    private final int rows = 20;
-    private final int cols = 100;
+    private final int rows = 5;
+    private final int cols = 2;
     private final Location[][] locations;
-    private final ScheduledExecutorService statisticsScheduler;
+    private StatisticsExecutor statisticsExecutor = null;
+    private EntityActionExecutor entityActionExecutor = null;
 
     public Island() {
         System.out.println("Start game - " + LocalTime.now());
@@ -19,7 +18,6 @@ public class Island {
         initializeLocations();
         System.out.println("Island created - " + LocalTime.now());
         System.out.println();
-        this.statisticsScheduler = Executors.newScheduledThreadPool(1);
     }
 
     public int getRows() {
@@ -47,13 +45,18 @@ public class Island {
     }
 
     public void startSimulation() {
-        StatisticsTask statisticsTask = new StatisticsTask(this);
-        statisticsScheduler.scheduleAtFixedRate(statisticsTask, 1, 6, TimeUnit.SECONDS);
+
+        statisticsExecutor = new StatisticsExecutor(this);
+        statisticsExecutor.startStatisticsTask();
+
+        entityActionExecutor = new EntityActionExecutor(this);
+        entityActionExecutor.startAnimalEatingTask();
+        entityActionExecutor.startGrowingTask();
+
     }
 
     public void stopSimulation() {
-        statisticsScheduler.shutdown();
+        statisticsExecutor.stopStatisticsTask();
+        entityActionExecutor.stopEntityTaskAction();
     }
-
-
 }

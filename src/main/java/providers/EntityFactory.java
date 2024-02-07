@@ -39,7 +39,7 @@ public class EntityFactory {
                 int value = (int) field.get(null);
 
                 Random random = new Random();
-                int numberOfEntities = random.nextInt(value);
+                int numberOfEntities = random.nextInt(value + 1);
 
                 for (int i = 0; i < numberOfEntities; i++) {
                     Entity entity = (Entity) clazz.getDeclaredConstructor().newInstance();

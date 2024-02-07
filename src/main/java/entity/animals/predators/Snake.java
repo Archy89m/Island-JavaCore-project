@@ -9,10 +9,7 @@ public class Snake extends Predator {
             getCharacteristics("Snake","maxOnCell").intValue();
     private static final String emoji = "🐍";
 
-    @Override
-    public void eat(Object food) {
 
-    }
 
     @Override
     public void move() {

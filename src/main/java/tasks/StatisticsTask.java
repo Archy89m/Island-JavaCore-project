@@ -1,4 +1,4 @@
-package statistics;
+package tasks;
 
 import entity.Entity;
 import org.island.Island;
@@ -7,9 +7,7 @@ import org.island.Location;
 import java.lang.reflect.Field;
 import java.text.NumberFormat;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class StatisticsTask implements Runnable{
 
@@ -53,6 +51,7 @@ public class StatisticsTask implements Runnable{
         displayEntities(herbivoresCountMap);
         System.out.print("Predators: ");
         displayEntities(predatorsCountMap);
+        System.out.println("Number of threads - " + Thread.activeCount());
         System.out.println();
     }
 
