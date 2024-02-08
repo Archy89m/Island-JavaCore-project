@@ -1,19 +1,18 @@
 package org.island;
 
 import executors.EntityActionExecutor;
-import executors.StatisticsExecutor;
+import executors.ScheduledExecutor;
 import java.time.LocalTime;
 
 public class Island {
 
-    private final int rows = 5;
-    private final int cols = 2;
+    private final int rows = 1;
+    private final int cols = 1;
     private final Location[][] locations;
-    private StatisticsExecutor statisticsExecutor = null;
+    private ScheduledExecutor scheduledExecutor = null;
     private EntityActionExecutor entityActionExecutor = null;
 
     public Island() {
-        System.out.println("Start game - " + LocalTime.now());
         this.locations = new Location[rows][cols];
         initializeLocations();
         System.out.println("Island created - " + LocalTime.now());
@@ -46,17 +45,18 @@ public class Island {
 
     public void startSimulation() {
 
-        statisticsExecutor = new StatisticsExecutor(this);
-        statisticsExecutor.startStatisticsTask();
+        scheduledExecutor = new ScheduledExecutor(this);
+        scheduledExecutor.startStatisticsTask();
+        scheduledExecutor.startClearingTask();
 
         entityActionExecutor = new EntityActionExecutor(this);
-        entityActionExecutor.startAnimalEatingTask();
+        entityActionExecutor.startAnimalLivingTasks();
         entityActionExecutor.startGrowingTask();
 
     }
 
     public void stopSimulation() {
-        statisticsExecutor.stopStatisticsTask();
+        scheduledExecutor.stopTasks();
         entityActionExecutor.stopEntityTaskAction();
     }
 }

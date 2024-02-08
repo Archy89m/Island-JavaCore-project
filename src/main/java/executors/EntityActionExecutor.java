@@ -1,11 +1,13 @@
 package executors;
 
+import entity.Animal;
 import entity.animals.Herbivore;
 import entity.animals.Predator;
 import org.island.Island;
 import org.island.Location;
 import tasks.EatingTask;
 import tasks.GrowingTask;
+import tasks.HungerTask;
 
 import java.util.concurrent.*;
 
@@ -19,17 +21,15 @@ public class EntityActionExecutor {
         this.actingExecutor = Executors.newCachedThreadPool();
     }
 
-    public void startAnimalEatingTask() {
+    public void startAnimalLivingTasks() {
         for (int i = 0; i < island.getRows(); i++) {
             for (int j = 0; j < island.getCols(); j++) {
                 Location location = island.getLocation(i, j);
-                for (Predator predator : location.getPredators()) {
-                    EatingTask eatingTask = new EatingTask(predator, location);
+                for (Animal animal:location.getAnimals()) {
+                    EatingTask eatingTask = new EatingTask(animal, location);
+                    HungerTask hungerTask = new HungerTask(animal);
                     actingExecutor.submit(eatingTask);
-                }
-                for (Herbivore herbivore : location.getHerbivores()) {
-                    EatingTask eatingTask = new EatingTask(herbivore, location);
-                    actingExecutor.submit(eatingTask);
+                    actingExecutor.submit(hungerTask);
                 }
             }
         }

@@ -7,6 +7,7 @@ public class Horse extends Herbivore {
 
     private static final int maxOnCell = SettingsProvider.
             getCharacteristics("Horse","maxOnCell").intValue();
+
     private static final String emoji = "🐎";
 
     @Override

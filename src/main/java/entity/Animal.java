@@ -4,6 +4,7 @@ import entity.Entity;
 import entity.animals.Herbivore;
 import entity.animals.Predator;
 import providers.SettingsProvider;
+import tasks.HungerTask;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -11,10 +12,13 @@ import java.util.concurrent.ThreadLocalRandom;
 public abstract class Animal extends Entity {
 
     private final int movementSpeed;
-    private final int amountFoodForSatiety;
-    private int hungerLevel;
+    private final double amountFoodForSatiety;
+    private volatile double hungerLevel;
 
-    public boolean eat(Entity food) {
+    public void eat(Entity food) {
+
+        if (hungerLevel >= amountFoodForSatiety)
+            return;
 
         if (food instanceof Herbivore || food instanceof Plant) {
 
@@ -22,14 +26,11 @@ public abstract class Animal extends Entity {
             int chance = num.intValue();
 
             int rand = ThreadLocalRandom.current().nextInt(1, 101);
+
             if (rand <= chance) {
+                hungerLevel = hungerLevel + food.getWeight();
                 food.die();
-                return true;
-            } else {
-                return false;
             }
-        } else {
-            return false;
         }
     }
 
@@ -46,15 +47,28 @@ public abstract class Animal extends Entity {
                 "movementSpeed").intValue();
         this.amountFoodForSatiety = SettingsProvider.getCharacteristics(
                 this.getClass().getSimpleName(),
-                "amountFoodForSatiety").intValue();
+                "amountFoodForSatiety").doubleValue();
+        this.hungerLevel = this.amountFoodForSatiety;
+
     }
 
     public int getMovementSpeed() {
         return movementSpeed;
     }
 
-    public int getAmountFoodForSatiety() {
+    public double getAmountFoodForSatiety() {
         return amountFoodForSatiety;
+    }
+
+    public double getHungerLevel() {
+        return hungerLevel;
+    }
+
+    public void hunger() {
+        if (hungerLevel <= 0)
+            die();
+        double hungerCount = amountFoodForSatiety / 10;
+        hungerLevel = hungerLevel - hungerCount;
     }
 
 }

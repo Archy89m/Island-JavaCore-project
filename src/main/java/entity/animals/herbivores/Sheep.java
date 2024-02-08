@@ -7,6 +7,7 @@ public class Sheep extends Herbivore {
 
     private static final int maxOnCell = SettingsProvider.
             getCharacteristics("Sheep","maxOnCell").intValue();
+
     private static final String emoji = "🐑";
 
     @Override

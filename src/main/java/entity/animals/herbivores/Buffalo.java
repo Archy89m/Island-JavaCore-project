@@ -7,8 +7,8 @@ public class Buffalo extends Herbivore {
 
     private static final int maxOnCell = SettingsProvider.
             getCharacteristics("Buffalo","maxOnCell").intValue();
-    private static final String emoji = "🦬";
 
+    private static final String emoji = "🦬";
 
     @Override
     public void move() {

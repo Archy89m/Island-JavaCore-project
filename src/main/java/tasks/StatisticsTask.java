@@ -45,17 +45,16 @@ public class StatisticsTask implements Runnable{
         }
 
         System.out.println("Statistics " + LocalTime.now());
-        System.out.print("Plants: ");
-        displayEntities(plantsCountMap);
-        System.out.print("Herbivores: ");
-        displayEntities(herbivoresCountMap);
-        System.out.print("Predators: ");
-        displayEntities(predatorsCountMap);
+        displayEntities(plantsCountMap, "Plants");
+        displayEntities(herbivoresCountMap, "Herbivores");
+        displayEntities(predatorsCountMap, "Predators");
         System.out.println("Number of threads - " + Thread.activeCount());
         System.out.println();
     }
 
-    public void displayEntities(Map<Class<?>, Integer> entities) {
+    public void displayEntities(Map<Class<?>, Integer> entities, String type) {
+
+        System.out.println(type + ": ");
 
         for (Map.Entry<Class<?>, Integer> entry : entities.entrySet()) {
             try {

@@ -1,15 +1,19 @@
 package org.island;
 
+import entity.Animal;
 import entity.Entity;
 import entity.Plant;
 import entity.animals.Herbivore;
 import entity.animals.Predator;
 import providers.EntityFactory;
+import providers.SettingsProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Location {
 
@@ -38,6 +42,12 @@ public class Location {
         }
     }
 
+    public void removeEntities(List<Entity> listEntities) {
+        synchronized (entities) {
+            entities.removeAll(listEntities);
+        }
+    }
+
     public List<Entity> getEntities() {
         return new ArrayList<>(entities);
     }
@@ -46,15 +56,33 @@ public class Location {
         entities.addAll(EntityFactory.createEntities());
     }
 
-    public List<Herbivore> getHerbivores() {
+    public List<Animal> getAnimals() {
+        List<Entity> copy = new ArrayList<>(entities);
+        return copy.stream()
+                .filter(entity -> entity instanceof Animal)
+                .map(entity -> (Animal) entity)
+                .filter(Animal::isAlive)
+                .toList();
+    }
+
+    public List<Entity> getHerbivores() {
+        List<Entity> copy = new ArrayList<>(entities);
+        return copy.stream()
+                .filter(entity -> entity instanceof Herbivore)
+                .filter(Entity::isAlive)
+                .toList();
+    }
+
+    public List<Herbivore> getHerbivoresAsFoodForHerbivores() {
+        List<String> classNames = SettingsProvider.getListHerbivoreAsFoodForHerbivores();
         List<Entity> copy = new ArrayList<>(entities);
         return copy.stream()
                 .filter(entity -> entity instanceof Herbivore)
                 .map(entity -> (Herbivore) entity)
                 .filter(Herbivore::isAlive)
+                .filter(herbivore -> classNames.contains(herbivore.getClass().getSimpleName()))
                 .toList();
     }
-
     public List<Predator> getPredators() {
         List<Entity> copy = new ArrayList<>(entities);
         return copy.stream()
@@ -64,12 +92,30 @@ public class Location {
                 .toList();
     }
 
-    public List<Plant> getPlants() {
+    public List<Entity> getFoodForHerbivores() {
+
+        List<Entity> copy = new ArrayList<>(entities);
+        List<Entity> plants = copy.stream()
+                .filter(entity -> entity instanceof Plant)
+                .filter(Entity::isAlive)
+                .toList();
+
+        List<String> classNames = SettingsProvider.getListHerbivoreAsFoodForHerbivores();
+        copy = new ArrayList<>(entities);
+        List<Entity> herbivoreAsFoodForHerbivores = copy.stream()
+                .filter(entity -> entity instanceof Herbivore)
+                .filter(Entity::isAlive)
+                .filter(herbivore -> classNames.contains(herbivore.getClass().getSimpleName()))
+                .toList();
+
+        return Stream.concat(plants.stream(), herbivoreAsFoodForHerbivores.stream())
+                .toList();
+    }
+
+    public List<Entity> getDeadEntities() {
         List<Entity> copy = new ArrayList<>(entities);
         return copy.stream()
-                .filter(entity -> entity instanceof Plant)
-                .map(entity -> (Plant) entity)
-                .filter(Plant::isAlive)
+                .filter(entity -> !entity.isAlive())
                 .toList();
     }
 }

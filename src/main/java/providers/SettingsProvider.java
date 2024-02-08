@@ -5,9 +5,8 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class SettingsProvider {
 
@@ -15,6 +14,7 @@ public class SettingsProvider {
     private static final String ENTITY_CHARACTERISTICS = "src\\main\\resources\\EntityCharacteristics.yml";
     private static final Map<String, Map<String, Number>> tableEatingProbabilities;
     private static final Map<String, Map<String, Number>> tableEntityCharacteristics;
+
 
     static {
         try {
@@ -57,5 +57,37 @@ public class SettingsProvider {
             finalMap.put(key, newInnerMap);
         }
         return finalMap;
+    }
+
+    public static Map<String, Map<String, Number>> getTableEatingProbabilities() {
+        return tableEatingProbabilities;
+    }
+
+    public static List<String> getListHerbivoreAsFoodForHerbivores() {
+
+        List<Class<?>> herbivoresClasses = null;
+        try {
+            PackageScanner scanner = new PackageScanner();
+            herbivoresClasses = scanner.getClasses("entity.animals.herbivores");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        List<String> listHerbivores = herbivoresClasses.stream()
+                .map(Class::getSimpleName)
+                .toList();
+
+        List<String> result = new ArrayList<>();
+        for (String predator : tableEatingProbabilities.keySet()) {
+            if (listHerbivores.contains(predator)) {
+                Map<String, Number> preyProbabilities = tableEatingProbabilities.get(predator);
+
+                for (String prey : preyProbabilities.keySet()) {
+                    if (listHerbivores.contains(prey) && preyProbabilities.get(prey).intValue() > 0)
+                        if (!result.contains(prey))
+                            result.add(prey);
+                }
+            }
+        }
+        return result;
     }
 }

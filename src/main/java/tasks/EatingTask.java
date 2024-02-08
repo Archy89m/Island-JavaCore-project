@@ -2,13 +2,11 @@ package tasks;
 
 import entity.Animal;
 import entity.Entity;
-import entity.Plant;
 import entity.animals.Herbivore;
 import entity.animals.Predator;
 import org.island.Location;
 
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
@@ -39,26 +37,19 @@ public class EatingTask implements Runnable{
 
     private void eatingAction() {
         Entity prey = null;
+        List<Entity> food = null;
         if (animal instanceof Predator) {
-            List<Herbivore> herbivores = location.getHerbivores();
-            if (!herbivores.isEmpty()) {
-                prey = herbivores.get(ThreadLocalRandom.current().nextInt(herbivores.size()));
-            } else {
-                return;
-            }
+            food = location.getHerbivores();
         } else if (animal instanceof Herbivore) {
-            List<Plant> plants = location.getPlants();
-            if (!plants.isEmpty()) {
-                prey = plants.get(ThreadLocalRandom.current().nextInt(plants.size()));
-            } else {
-                return;
-            }
+            food = location.getFoodForHerbivores();
         } else {
             return;
         }
-
-        if (animal.eat(prey))
-            this.location.removeEntity(prey);
-
+        if (!food.isEmpty()) {
+            prey = food.get(ThreadLocalRandom.current().nextInt(food.size()));
+        } else {
+            return;
+        }
+        animal.eat(prey);
     }
 }

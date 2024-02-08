@@ -35,9 +35,5 @@ public class GrowingTask implements Runnable{
         EntityFactory.addEntitiesToList(Plant.class, plants);
 
         location.addEntities(plants);
-/*
-        for (Entity plant:plants)
-            location.addEntity(plant);
-*/
     }
 }
