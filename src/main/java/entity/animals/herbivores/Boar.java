@@ -3,7 +3,6 @@ package entity.animals.herbivores;
 import entity.animals.Herbivore;
 import providers.SettingsProvider;
 
-import java.util.List;
 
 public class Boar extends Herbivore {
 
@@ -15,11 +14,6 @@ public class Boar extends Herbivore {
 
     @Override
     public void move() {
-
-    }
-
-    @Override
-    public void reproduce() {
 
     }
 

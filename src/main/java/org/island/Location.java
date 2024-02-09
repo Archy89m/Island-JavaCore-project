@@ -9,10 +9,7 @@ import providers.EntityFactory;
 import providers.SettingsProvider;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Location {
@@ -62,6 +59,14 @@ public class Location {
                 .filter(entity -> entity instanceof Animal)
                 .map(entity -> (Animal) entity)
                 .filter(Animal::isAlive)
+                .toList();
+    }
+
+    public List<Entity> getAnimalOfClass(Class<? extends Animal> animalClass) {
+        List<Entity> copy = new ArrayList<>(entities);
+        return copy.stream()
+                .filter(animalClass::isInstance)
+                .filter(Entity::isAlive)
                 .toList();
     }
 

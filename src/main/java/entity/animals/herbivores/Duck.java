@@ -17,8 +17,5 @@ public class Duck extends Herbivore {
 
     }
 
-    @Override
-    public void reproduce() {
 
-    }
 }

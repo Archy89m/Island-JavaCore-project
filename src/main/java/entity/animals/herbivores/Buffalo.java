@@ -15,8 +15,5 @@ public class Buffalo extends Herbivore {
 
     }
 
-    @Override
-    public void reproduce() {
 
-    }
 }

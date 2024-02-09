@@ -15,8 +15,5 @@ public class Horse extends Herbivore {
 
     }
 
-    @Override
-    public void reproduce() {
 
-    }
 }

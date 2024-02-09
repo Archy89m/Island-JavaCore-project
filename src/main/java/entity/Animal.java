@@ -1,12 +1,11 @@
 package entity;
 
-import entity.Entity;
 import entity.animals.Herbivore;
-import entity.animals.Predator;
+import org.island.Location;
+import providers.EntityFactory;
 import providers.SettingsProvider;
-import tasks.HungerTask;
 
-import java.util.Random;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Animal extends Entity {
@@ -36,7 +35,16 @@ public abstract class Animal extends Entity {
 
     public abstract void move();
 
-    public abstract void reproduce();
+    public List<Entity> reproduce(Entity partner, Location location) {
+
+        boolean sex = ThreadLocalRandom.current().nextBoolean();
+        List<Entity> kids = null;
+        if (sex) {
+            int numberOfKids = ThreadLocalRandom.current().nextInt(1, 6);
+            kids = EntityFactory.reproduceAnimals(partner.getClass(), numberOfKids);
+        }
+        return kids;
+    }
 
     public Animal() {
 

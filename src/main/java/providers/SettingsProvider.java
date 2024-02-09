@@ -5,8 +5,10 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 
 public class SettingsProvider {
 
@@ -14,7 +16,6 @@ public class SettingsProvider {
     private static final String ENTITY_CHARACTERISTICS = "src\\main\\resources\\EntityCharacteristics.yml";
     private static final Map<String, Map<String, Number>> tableEatingProbabilities;
     private static final Map<String, Map<String, Number>> tableEntityCharacteristics;
-
 
     static {
         try {

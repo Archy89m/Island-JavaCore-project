@@ -8,9 +8,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collectors;
+
 
 
 public class EntityFactory {
@@ -54,5 +53,19 @@ public class EntityFactory {
         }
     }
 
+    public static List<Entity> reproduceAnimals(Class<?> clazz, int numberOfEntities)  {
 
+        List<Entity> animals = new ArrayList<>();
+
+        for (int i = 0; i < numberOfEntities; i++) {
+            try {
+                Entity entity = (Entity) clazz.getDeclaredConstructor().newInstance();
+                animals.add(entity);
+            } catch (InstantiationException | IllegalAccessException |
+                     InvocationTargetException | NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return animals;
+    }
 }

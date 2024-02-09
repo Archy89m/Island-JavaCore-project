@@ -15,8 +15,5 @@ public class Rabbit extends Herbivore {
 
     }
 
-    @Override
-    public void reproduce() {
 
-    }
 }

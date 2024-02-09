@@ -16,8 +16,5 @@ public class Snake extends Predator {
 
     }
 
-    @Override
-    public void reproduce() {
 
-    }
 }

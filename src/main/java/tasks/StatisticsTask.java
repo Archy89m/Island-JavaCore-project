@@ -7,7 +7,10 @@ import org.island.Location;
 import java.lang.reflect.Field;
 import java.text.NumberFormat;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 
 public class StatisticsTask implements Runnable{
 
@@ -69,5 +72,4 @@ public class StatisticsTask implements Runnable{
         }
         System.out.println();
     }
-
 }

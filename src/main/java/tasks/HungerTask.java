@@ -1,13 +1,6 @@
 package tasks;
 
 import entity.Animal;
-import entity.Entity;
-import entity.Plant;
-import org.island.Location;
-import providers.EntityFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class HungerTask implements Runnable{
