@@ -1,11 +1,10 @@
 package entity;
 
 import entity.animals.Herbivore;
+import org.island.Island;
 import org.island.Location;
 import providers.EntityFactory;
 import providers.SettingsProvider;
-
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Animal extends Entity {
@@ -33,17 +32,20 @@ public abstract class Animal extends Entity {
         }
     }
 
-    public abstract void move();
+    public void move(Location location) {
 
-    public List<Entity> reproduce(Entity partner, Location location) {
+        //Location[][] locations = location.
+        //int x = location.
+
+    }
+
+    public Entity reproduce(Entity partner, Location location) {
 
         boolean sex = ThreadLocalRandom.current().nextBoolean();
-        List<Entity> kids = null;
-        if (sex) {
-            int numberOfKids = ThreadLocalRandom.current().nextInt(1, 6);
-            kids = EntityFactory.reproduceAnimals(partner.getClass(), numberOfKids);
-        }
-        return kids;
+        if (sex)
+            return EntityFactory.reproduceAnimals(partner.getClass());
+        else
+            return null;
     }
 
     public Animal() {
@@ -75,7 +77,7 @@ public abstract class Animal extends Entity {
     public void hunger() {
         if (hungerLevel <= 0)
             die();
-        double hungerCount = amountFoodForSatiety / 10;
+        double hungerCount = amountFoodForSatiety / 2;
         hungerLevel = hungerLevel - hungerCount;
     }
 

@@ -1,5 +1,6 @@
 package entity;
 
+import org.island.Island;
 import providers.SettingsProvider;
 
 public abstract class Entity {
@@ -25,5 +26,6 @@ public abstract class Entity {
 
     public void die() {
         isAlive = false;
+        Island.increaseNumberOfDeaths();
     }
 }

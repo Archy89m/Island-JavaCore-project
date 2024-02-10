@@ -11,10 +11,4 @@ public class Snake extends Predator {
 
 
 
-    @Override
-    public void move() {
-
-    }
-
-
 }

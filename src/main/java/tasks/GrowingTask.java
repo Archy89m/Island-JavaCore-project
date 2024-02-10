@@ -19,21 +19,8 @@ public class GrowingTask implements Runnable{
 
     @Override
     public void run() {
-        while (!Thread.currentThread().isInterrupted()) {
-            try {
-                growingAction();
-                TimeUnit.SECONDS.sleep(2);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-    }
-
-    private void growingAction() {
-
-        List<Entity> plants = new ArrayList<>();
-        EntityFactory.addEntitiesToList(Plant.class, plants);
-
+        List<Entity> plants = EntityFactory.growPlants(1);
         location.addEntities(plants);
     }
+
 }

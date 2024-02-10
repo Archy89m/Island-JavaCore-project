@@ -10,11 +10,4 @@ public class Eagle extends Predator {
     private static final String emoji = "🦅";
 
 
-
-    @Override
-    public void move() {
-
-    }
-
-
 }

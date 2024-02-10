@@ -9,8 +9,5 @@ public class Plant extends Entity{
 
     private static final String emoji = "🌱";
 
-    public Plant() {
-        super();
-    }
 
 }

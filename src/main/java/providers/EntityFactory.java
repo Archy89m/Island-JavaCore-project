@@ -1,6 +1,8 @@
 package providers;
 
 import entity.Entity;
+import entity.Plant;
+import org.island.Island;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -9,7 +11,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class EntityFactory {
@@ -39,6 +41,8 @@ public class EntityFactory {
                 field.setAccessible(true);
                 int value = (int) field.get(null);
 
+                value = value / 20 + 1;
+
                 Random random = new Random();
                 int numberOfEntities = random.nextInt(value + 1);
 
@@ -53,19 +57,28 @@ public class EntityFactory {
         }
     }
 
-    public static List<Entity> reproduceAnimals(Class<?> clazz, int numberOfEntities)  {
+    public static Entity reproduceAnimals(Class<?> clazz)  {
 
-        List<Entity> animals = new ArrayList<>();
-
-        for (int i = 0; i < numberOfEntities; i++) {
-            try {
-                Entity entity = (Entity) clazz.getDeclaredConstructor().newInstance();
-                animals.add(entity);
-            } catch (InstantiationException | IllegalAccessException |
-                     InvocationTargetException | NoSuchMethodException e) {
-                throw new RuntimeException(e);
-            }
+        Entity entity = null;
+        try {
+            entity = (Entity) clazz.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | NoSuchMethodException
+                 | InvocationTargetException | IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
-        return animals;
+        return entity;
+    }
+
+    public static List<Entity> growPlants(int maxNumber) {
+
+        List<Entity> plants = new ArrayList<>();
+        int numberOfPlants = ThreadLocalRandom.current().nextInt(maxNumber + 1);
+
+        for (int i = 0; i < numberOfPlants; i++) {
+            Entity plant = new Plant();
+            plants.add(plant);
+            Island.increaseNumberOfBorn();
+        }
+        return plants;
     }
 }

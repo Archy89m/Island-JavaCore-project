@@ -75,4 +75,4 @@ Caterpillar:
   amountFoodForSatiety: 0
 Plant:
   weight: 1
-  maxOnCell: 1000
+  maxOnCell: 100

@@ -11,10 +11,5 @@ public class Goat extends Herbivore {
     private static final String emoji = "🐐";
 
 
-    @Override
-    public void move() {
-
-    }
-
 
 }

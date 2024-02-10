@@ -3,14 +3,17 @@ package org.island;
 import executors.EntityActionExecutor;
 import executors.ScheduledExecutor;
 import java.time.LocalTime;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Island {
 
-    private final int rows = 1;
-    private final int cols = 1;
+    private final int rows = 20;
+    private final int cols = 20;
     private final Location[][] locations;
     private ScheduledExecutor scheduledExecutor = null;
     private EntityActionExecutor entityActionExecutor = null;
+    private static final AtomicInteger numberOfBorn = new AtomicInteger();
+    private static final AtomicInteger numberOfDeaths = new AtomicInteger();
 
     public Island() {
         this.locations = new Location[rows][cols];
@@ -27,6 +30,22 @@ public class Island {
         return cols;
     }
 
+    public static void increaseNumberOfBorn() {
+        numberOfBorn.getAndIncrement();
+    }
+
+    public static void increaseNumberOfDeaths() {
+        numberOfDeaths.getAndIncrement();
+    }
+
+    public static int getBorn() {
+        return numberOfBorn.get();
+    }
+
+    public static int getDead() {
+        return numberOfDeaths.get();
+    }
+
     public Location[][] getLocations() {
         return locations;
     }
@@ -34,7 +53,7 @@ public class Island {
     private void initializeLocations() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                locations[i][j] = new Location();
+                locations[i][j] = new Location(this);
             }
         }
     }
@@ -46,13 +65,12 @@ public class Island {
     public void startSimulation() {
 
         scheduledExecutor = new ScheduledExecutor(this);
-        scheduledExecutor.startStatisticsTask();
+        scheduledExecutor.startBirthTask();
         scheduledExecutor.startClearingTask();
+        scheduledExecutor.startStatisticsTask();
 
         entityActionExecutor = new EntityActionExecutor(this);
-        entityActionExecutor.startAnimalLivingTasks();
         entityActionExecutor.startGrowingTask();
-
     }
 
     public void stopSimulation() {

@@ -11,10 +11,5 @@ public class Deer extends Herbivore {
     private static final String emoji = "🫎";
 
 
-    @Override
-    public void move() {
-
-    }
-
 
 }

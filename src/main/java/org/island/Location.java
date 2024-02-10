@@ -14,10 +14,14 @@ import java.util.stream.Stream;
 
 public class Location {
 
+    private final Island island;
     private List<Entity> entities;
+    private List<Entity> kids;
 
-    public Location() {
+    public Location(Island island) {
+        this.island = island;
         this.entities = new ArrayList<>();
+        this.kids = new ArrayList<>();
         initializeEntities();
     }
 
@@ -27,9 +31,30 @@ public class Location {
         }
     }
 
-    public void addEntities(List<Entity> listEntities) {
+    public void addEntities(List<Entity> entityList) {
         synchronized (entities) {
-            entities.addAll(listEntities);
+            entities.addAll(entityList);
+        }
+    }
+
+    public void addKid(Entity entity) {
+        synchronized (kids) {
+            kids.add(entity);
+        }
+    }
+
+    public List<Entity> getKids() {
+        List<Entity> copy = new ArrayList<>(kids);
+        return copy.stream()
+                //.filter(entity -> entity instanceof Animal)
+                //.map(entity -> (Animal) entity)
+                .toList();
+
+    }
+
+    public void removeKids() {
+        synchronized (kids) {
+            kids = new ArrayList<>();
         }
     }
 
@@ -49,9 +74,16 @@ public class Location {
         return new ArrayList<>(entities);
     }
 
-    private void initializeEntities() {
-        entities.addAll(EntityFactory.createEntities());
+    public Island getIsland() {
+        return island;
     }
+
+    private void initializeEntities() {
+        //entities.addAll(EntityFactory.createEntities());
+        kids.addAll(EntityFactory.createEntities());
+    }
+
+
 
     public List<Animal> getAnimals() {
         List<Entity> copy = new ArrayList<>(entities);
@@ -88,6 +120,7 @@ public class Location {
                 .filter(herbivore -> classNames.contains(herbivore.getClass().getSimpleName()))
                 .toList();
     }
+
     public List<Predator> getPredators() {
         List<Entity> copy = new ArrayList<>(entities);
         return copy.stream()
