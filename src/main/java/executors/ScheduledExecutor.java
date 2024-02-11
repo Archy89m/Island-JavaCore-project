@@ -22,7 +22,7 @@ public class ScheduledExecutor {
         this.island = island;
         this.clearingExecutor = Executors.newScheduledThreadPool(1);
         this.statisticsScheduler = Executors.newScheduledThreadPool(1);
-        this.birthScheduler = Executors.newScheduledThreadPool(1);
+        this.birthScheduler = Executors.newScheduledThreadPool(4);
         this.entityActionExecutor = new EntityActionExecutor(island);
     }
 
@@ -30,7 +30,6 @@ public class ScheduledExecutor {
         StatisticsTask statisticsTask = new StatisticsTask(island);
         statisticsScheduler.scheduleAtFixedRate(statisticsTask, 2, 5, TimeUnit.SECONDS);
     }
-
 
     public void startClearingTask() {
         for (int i = 0; i < island.getRows(); i++) {

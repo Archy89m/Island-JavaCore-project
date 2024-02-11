@@ -1,7 +1,5 @@
 package org.island;
 
-
-
 import java.time.LocalTime;
 
 
@@ -19,7 +17,6 @@ public class App {
         }
 
         island.stopSimulation();
-
     }
 
 }

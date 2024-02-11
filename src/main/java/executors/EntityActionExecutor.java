@@ -4,10 +4,7 @@ import entity.Animal;
 import entity.Entity;
 import org.island.Island;
 import org.island.Location;
-import tasks.EatingTask;
-import tasks.GrowingTask;
-import tasks.HungerTask;
-import tasks.ReproduceTask;
+import tasks.*;
 
 import java.util.List;
 import java.util.concurrent.*;
@@ -30,16 +27,14 @@ public class EntityActionExecutor {
                 if (!kids.isEmpty()) {
                     for (Entity entity : kids) {
                         if (entity instanceof Animal animal) {
-                            EatingTask eatingTask = new EatingTask((Animal)entity, location);
-                            ReproduceTask reproduceTask = new ReproduceTask(animal, location);
-                            HungerTask hungerTask = new HungerTask(animal);
-                            actingExecutor.submit(eatingTask);
-                            actingExecutor.submit(reproduceTask);
-                            actingExecutor.submit(hungerTask);
+                            //actingExecutor.submit(new HungerTask(animal));
+                            //actingExecutor.submit(new EatingTask(animal));
+                            actingExecutor.submit(new MovingTask(animal));
+                            //actingExecutor.submit(new ReproduceTask(animal));
                         }
                     }
                     location.addEntities(kids);
-                    location.removeKids();
+                    location.removeKids(kids);
                 }
             }
         }

@@ -4,7 +4,6 @@ import entity.Animal;
 import entity.Entity;
 import entity.animals.Herbivore;
 import entity.animals.Predator;
-import org.island.Location;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -14,11 +13,9 @@ import java.util.concurrent.TimeUnit;
 public class EatingTask implements Runnable{
 
     private final Animal animal;
-    private final Location location;
 
-    public EatingTask(Animal animal, Location location) {
+    public EatingTask(Animal animal) {
         this.animal = animal;
-        this.location = location;
     }
 
     @Override
@@ -39,9 +36,9 @@ public class EatingTask implements Runnable{
         Entity prey = null;
         List<Entity> food = null;
         if (animal instanceof Predator) {
-            food = location.getHerbivores();
+            food = animal.getLocation().getHerbivores();
         } else if (animal instanceof Herbivore) {
-            food = location.getFoodForHerbivores();
+            food = animal.getLocation().getFoodForHerbivores();
         } else {
             return;
         }

@@ -17,15 +17,11 @@ public class HungerTask implements Runnable{
             try {
                 if (!animal.isAlive())
                     Thread.currentThread().interrupt();
-                hungerAction();
+                animal.hunger();
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
         }
-    }
-
-    private void hungerAction() {
-        animal.hunger();
     }
 }

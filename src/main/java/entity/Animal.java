@@ -25,21 +25,41 @@ public abstract class Animal extends Entity {
 
             int rand = ThreadLocalRandom.current().nextInt(1, 101);
 
-            if (rand <= chance) {
+            if (rand <= chance && food.isAlive()) {
                 hungerLevel = hungerLevel + food.getWeight();
                 food.die();
             }
         }
     }
 
-    public void move(Location location) {
+    public void move() {
 
-        //Location[][] locations = location.
-        //int x = location.
+        Location currentLocation = getLocation();
 
+        int iMax = currentLocation.getIsland().getRows() - 1;
+        int jMax = currentLocation.getIsland().getCols() - 1;
+
+        int newI = currentLocation.getI();
+        int newJ = currentLocation.getJ();
+
+        int distance = ThreadLocalRandom.current().nextInt(movementSpeed + 1);
+
+        for (int i = 0; i < distance; i++) {
+            if (ThreadLocalRandom.current().nextBoolean()) {
+                newI++;
+                if (newI > iMax)
+                    newI = 0;
+            } else {
+                newJ++;
+                if (newJ > jMax)
+                    newJ = 0;
+            }
+        }
+        if (newI != currentLocation.getI() || newJ != currentLocation.getJ())
+            currentLocation.getIsland().moveAnimal(this, currentLocation.getI(), currentLocation.getJ(), newI, newJ);
     }
 
-    public Entity reproduce(Entity partner, Location location) {
+    public Entity reproduce(Entity partner) {
 
         boolean sex = ThreadLocalRandom.current().nextBoolean();
         if (sex)
@@ -62,22 +82,12 @@ public abstract class Animal extends Entity {
 
     }
 
-    public int getMovementSpeed() {
-        return movementSpeed;
-    }
-
-    public double getAmountFoodForSatiety() {
-        return amountFoodForSatiety;
-    }
-
-    public double getHungerLevel() {
-        return hungerLevel;
-    }
-
     public void hunger() {
-        if (hungerLevel <= 0)
+        if (hungerLevel <= 0 && isAlive()) {
             die();
-        double hungerCount = amountFoodForSatiety / 2;
+            return;
+        }
+        double hungerCount = amountFoodForSatiety / 10;
         hungerLevel = hungerLevel - hungerCount;
     }
 

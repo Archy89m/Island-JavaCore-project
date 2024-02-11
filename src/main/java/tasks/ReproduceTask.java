@@ -12,11 +12,9 @@ import java.util.concurrent.TimeUnit;
 
 public class ReproduceTask implements Runnable{
     private final Animal animal;
-    private final Location location;
 
-    public ReproduceTask(Animal animal, Location location) {
+    public ReproduceTask(Animal animal) {
         this.animal = animal;
-        this.location = location;
     }
 
     @Override
@@ -35,7 +33,7 @@ public class ReproduceTask implements Runnable{
 
     public void reproduceAction() {
 
-        List<Entity> repList = location.getAnimalOfClass(animal.getClass());
+        List<Entity> repList = animal.getLocation().getAnimalOfClass(animal.getClass());
         int maxOnCell;
 
         try {
@@ -51,9 +49,9 @@ public class ReproduceTask implements Runnable{
         if (maxNumber > 0) {
             Entity partner = repList.get(ThreadLocalRandom.current().nextInt(repList.size()));
 
-            Entity kid = animal.reproduce(partner, location);
+            Entity kid = animal.reproduce(partner);
             if (kid != null) {
-                location.addKid(kid);
+                animal.getLocation().addKid(kid);
                 Island.increaseNumberOfBorn();
             }
         }

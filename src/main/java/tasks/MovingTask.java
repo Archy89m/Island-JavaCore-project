@@ -13,11 +13,9 @@ import java.util.concurrent.TimeUnit;
 public class MovingTask implements Runnable{
 
     private final Animal animal;
-    private final Location location;
 
-    public MovingTask(Animal animal, Location location) {
+    public MovingTask(Animal animal) {
         this.animal = animal;
-        this.location = location;
     }
 
     @Override
@@ -26,15 +24,11 @@ public class MovingTask implements Runnable{
             try {
                 if (!animal.isAlive())
                     Thread.currentThread().interrupt();
-                movingAction();
+                animal.move();
                 TimeUnit.SECONDS.sleep(5);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
         }
-    }
-
-    private void movingAction() {
-        animal.move(location);
     }
 }

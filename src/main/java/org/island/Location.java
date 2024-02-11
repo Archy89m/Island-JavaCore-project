@@ -15,59 +15,48 @@ import java.util.stream.Stream;
 public class Location {
 
     private final Island island;
-    private List<Entity> entities;
-    private List<Entity> kids;
+    private final List<Entity> entities;
+    private final List<Entity> kids;
+    private final int i;
+    private final int j;
 
-    public Location(Island island) {
+    public Location(Island island, int i, int j) {
         this.island = island;
+        this.i = i;
+        this.j = j;
         this.entities = new ArrayList<>();
         this.kids = new ArrayList<>();
         initializeEntities();
     }
 
-    public void addEntity(Entity entity) {
-        synchronized (entities) {
-            entities.add(entity);
-        }
+    public synchronized void addEntity(Entity entity) {
+        entities.add(entity);
     }
 
-    public void addEntities(List<Entity> entityList) {
-        synchronized (entities) {
-            entities.addAll(entityList);
-        }
+    public synchronized void addEntities(List<Entity> entityList) {
+        entities.addAll(entityList);
     }
 
-    public void addKid(Entity entity) {
-        synchronized (kids) {
-            kids.add(entity);
-        }
+    public synchronized void addKid(Entity entity) {
+        kids.add(entity);
     }
 
     public List<Entity> getKids() {
         List<Entity> copy = new ArrayList<>(kids);
         return copy.stream()
-                //.filter(entity -> entity instanceof Animal)
-                //.map(entity -> (Animal) entity)
                 .toList();
-
     }
 
-    public void removeKids() {
-        synchronized (kids) {
-            kids = new ArrayList<>();
-        }
+    public synchronized void removeKids(List<Entity> listEntities) {
+        kids.removeAll(listEntities);
     }
 
-    public void removeEntity(Entity entity) {
-        synchronized (entities) {
-            entities.remove(entity);
-        }
+    public synchronized void removeEntity(Entity entity) {
+        entities.remove(entity);
     }
 
-    public void removeEntities(List<Entity> listEntities) {
-        synchronized (entities) {
-            entities.removeAll(listEntities);
-        }
+    public synchronized void removeEntities(List<Entity> listEntities) {
+        entities.removeAll(listEntities);
     }
 
     public List<Entity> getEntities() {
@@ -78,12 +67,23 @@ public class Location {
         return island;
     }
 
-    private void initializeEntities() {
-        //entities.addAll(EntityFactory.createEntities());
-        kids.addAll(EntityFactory.createEntities());
+    public int getI() {
+        return i;
     }
 
+    public int getJ() {
+        return j;
+    }
 
+    private void initializeEntities() {
+
+        List<Entity> newEntities = EntityFactory.createEntities();
+
+        for (Entity newEntity:newEntities)
+            newEntity.setLocation(this);
+
+        kids.addAll(newEntities);
+    }
 
     public List<Animal> getAnimals() {
         List<Entity> copy = new ArrayList<>(entities);

@@ -53,6 +53,7 @@ public class StatisticsTask implements Runnable{
         displayEntities(predatorsCountMap, "Predators");
         System.out.println("Born - " + Island.getBorn() + ", dead - " + Island.getDead());
         System.out.println("Number of threads - " + Thread.activeCount());
+        //displayMovingOfAnimals();
         System.out.println();
     }
 
@@ -72,5 +73,17 @@ public class StatisticsTask implements Runnable{
             }
         }
         System.out.println();
+    }
+
+    public void displayMovingOfAnimals() {
+        System.out.println();
+        for (int i = 0; i < island.getRows(); i++) {
+            for (int j = 0; j < island.getCols(); j++) {
+
+                int number = island.getLocation(i, j).getAnimals().size();
+                System.out.print(number + " ");
+            }
+            System.out.println();
+        }
     }
 }

@@ -1,11 +1,14 @@
 package entity;
 
 import org.island.Island;
+import org.island.Location;
 import providers.SettingsProvider;
 
 public abstract class Entity {
+
     private final double weight;
     private volatile boolean isAlive;
+    private Location location;
 
     public Entity() {
 
@@ -18,6 +21,14 @@ public abstract class Entity {
 
     public double getWeight() {
         return weight;
+    }
+
+    public synchronized Location getLocation() {
+        return location;
+    }
+
+    public synchronized void setLocation(Location location) {
+        this.location = location;
     }
 
     public boolean isAlive() {
