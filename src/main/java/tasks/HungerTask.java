@@ -13,12 +13,13 @@ public class HungerTask implements Runnable{
 
     @Override
     public void run() {
+
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 if (!animal.isAlive())
                     Thread.currentThread().interrupt();
                 animal.hunger();
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.SECONDS.sleep(3);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }

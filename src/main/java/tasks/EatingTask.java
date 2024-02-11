@@ -4,6 +4,7 @@ import entity.Animal;
 import entity.Entity;
 import entity.animals.Herbivore;
 import entity.animals.Predator;
+import org.island.Location;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -20,12 +21,13 @@ public class EatingTask implements Runnable{
 
     @Override
     public void run() {
+
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 if (!animal.isAlive())
                     Thread.currentThread().interrupt();
                 eatingAction();
-                TimeUnit.SECONDS.sleep(3);
+                TimeUnit.SECONDS.sleep(5);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -33,12 +35,14 @@ public class EatingTask implements Runnable{
     }
 
     private void eatingAction() {
-        Entity prey = null;
-        List<Entity> food = null;
+
+        Entity prey;
+        List<Entity> food;
+        Location location = animal.getLocation();
         if (animal instanceof Predator) {
-            food = animal.getLocation().getHerbivores();
+            food = location.getIsland().getHerbivores(location);
         } else if (animal instanceof Herbivore) {
-            food = animal.getLocation().getFoodForHerbivores();
+            food = location.getIsland().getFoodForHerbivores(location);
         } else {
             return;
         }

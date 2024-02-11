@@ -1,7 +1,6 @@
 package entity;
 
 import entity.animals.Herbivore;
-import org.island.Island;
 import org.island.Location;
 import providers.EntityFactory;
 import providers.SettingsProvider;
@@ -56,7 +55,7 @@ public abstract class Animal extends Entity {
             }
         }
         if (newI != currentLocation.getI() || newJ != currentLocation.getJ())
-            currentLocation.getIsland().moveAnimal(this, currentLocation.getI(), currentLocation.getJ(), newI, newJ);
+            setLocation(currentLocation.getIsland().getLocation(newI, newJ));
     }
 
     public Entity reproduce(Entity partner) {
@@ -79,16 +78,15 @@ public abstract class Animal extends Entity {
                 this.getClass().getSimpleName(),
                 "amountFoodForSatiety").doubleValue();
         this.hungerLevel = this.amountFoodForSatiety;
-
     }
 
     public void hunger() {
+
         if (hungerLevel <= 0 && isAlive()) {
             die();
             return;
         }
-        double hungerCount = amountFoodForSatiety / 10;
+        double hungerCount = amountFoodForSatiety / 3;
         hungerLevel = hungerLevel - hungerCount;
     }
-
 }

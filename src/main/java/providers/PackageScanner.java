@@ -6,9 +6,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+
 public class PackageScanner {
 
     public List<Class<?>> getClasses(String packageName) throws IOException {
+
         String path = packageName.replace('.', '/');
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Enumeration<URL> resources = classLoader.getResources(path);
@@ -23,11 +25,11 @@ public class PackageScanner {
         for (File directory : directories) {
             classes.addAll(findClasses(directory, packageName));
         }
-
         return classes;
     }
 
     private List<Class<?>> findClasses(File directory, String packageName) {
+
         List<Class<?>> classes = new ArrayList<>();
         if (!directory.exists()) {
             return classes;

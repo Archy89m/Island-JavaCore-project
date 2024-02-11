@@ -1,26 +1,30 @@
 package tasks;
 
 import entity.Entity;
-import entity.Plant;
-import org.island.Location;
+import org.island.Island;
 import providers.EntityFactory;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class GrowingTask implements Runnable{
 
-    private final Location location;
+    private final Island island;
 
-    public GrowingTask(Location location) {
-        this.location = location;
+    public GrowingTask(Island island) {
+        this.island = island;
     }
 
     @Override
     public void run() {
-        List<Entity> plants = EntityFactory.growPlants(1);
-        location.addEntities(plants);
+
+        for (int i = 0; i < island.getRows(); i++) {
+            for (int j = 0; j < island.getCols(); j++) {
+                List<Entity> plants = EntityFactory.growPlants(1);
+                for (Entity entity:plants)
+                    entity.setLocation(island.getLocation(i, j));
+                island.addEntities(plants);
+            }
+        }
     }
 
 }

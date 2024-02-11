@@ -24,7 +24,7 @@ public class ReproduceTask implements Runnable{
                 if (!animal.isAlive())
                     Thread.currentThread().interrupt();
                 reproduceAction();
-                TimeUnit.SECONDS.sleep(10);
+                TimeUnit.SECONDS.sleep(5);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -33,7 +33,9 @@ public class ReproduceTask implements Runnable{
 
     public void reproduceAction() {
 
-        List<Entity> repList = animal.getLocation().getAnimalOfClass(animal.getClass());
+        Location location = animal.getLocation();
+
+        List<Entity> repList = location.getIsland().getAnimalOfClass(animal.getClass(), location);
         int maxOnCell;
 
         try {
@@ -51,7 +53,7 @@ public class ReproduceTask implements Runnable{
 
             Entity kid = animal.reproduce(partner);
             if (kid != null) {
-                animal.getLocation().addKid(kid);
+                location.getIsland().addKid(kid);
                 Island.increaseNumberOfBorn();
             }
         }

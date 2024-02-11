@@ -11,6 +11,7 @@ public class BirthTask implements Runnable{
     }
     @Override
     public void run() {
+
         entityActionExecutor.startAnimalLivingTasks();
         entityActionExecutor.startGrowingTask();
     }

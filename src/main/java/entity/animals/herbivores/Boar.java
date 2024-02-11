@@ -11,4 +11,5 @@ public class Boar extends Herbivore {
     private static final String emoji = "🐗";
 
 
+
 }

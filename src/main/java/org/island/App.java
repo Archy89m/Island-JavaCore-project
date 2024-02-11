@@ -1,6 +1,7 @@
 package org.island;
 
 import java.time.LocalTime;
+import java.util.concurrent.TimeUnit;
 
 
 public class App {
@@ -10,12 +11,11 @@ public class App {
         island.startSimulation();
 
         try {
-            Thread.sleep(1000 * 30);
+            TimeUnit.SECONDS.sleep(60);
             System.out.println("Stopping the game " + LocalTime.now());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
         island.stopSimulation();
     }
 

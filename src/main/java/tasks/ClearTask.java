@@ -1,22 +1,23 @@
 package tasks;
 
 import entity.Entity;
-import org.island.Location;
+import org.island.Island;
 
 import java.util.List;
 
 
 public class ClearTask implements Runnable{
 
-    private final Location location;
+    private final Island island;
 
-    public ClearTask(Location location) {
-        this.location = location;
+    public ClearTask(Island island) {
+        this.island = island;
     }
 
     @Override
     public void run() {
-        List<Entity> deadEntities = location.getDeadEntities();
-        location.removeEntities(deadEntities);
+
+        List<Entity> deadEntities = island.getDeadEntities();
+        island.removeEntities(deadEntities);
     }
 }

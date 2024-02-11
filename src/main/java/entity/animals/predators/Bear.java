@@ -10,4 +10,5 @@ public class Bear extends Predator {
     private static final String emoji = "🐻";
 
 
+
 }

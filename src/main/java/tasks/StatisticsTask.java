@@ -2,14 +2,13 @@ package tasks;
 
 import entity.Entity;
 import org.island.Island;
-import org.island.Location;
 
 import java.lang.reflect.Field;
 import java.text.NumberFormat;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.stream.Stream;
 
 
 public class StatisticsTask implements Runnable{
@@ -31,29 +30,28 @@ public class StatisticsTask implements Runnable{
         Map<Class<?>, Integer> herbivoresCountMap = new HashMap<>();
         Map<Class<?>, Integer> predatorsCountMap = new HashMap<>();
 
-        for (int i = 0; i < island.getRows(); i++) {
-            for (int j = 0; j < island.getCols(); j++) {
-                Location location = island.getLocations()[i][j];
-                for (Entity entity : location.getEntities()) {
-                    Class<?> clazz = entity.getClass();
-                    if (clazz.getName().contains("Plant")) {
-                        plantsCountMap.put(clazz, plantsCountMap.getOrDefault(clazz, 0) + 1);
-                    } else if (clazz.getName().contains("herbivores")) {
-                        herbivoresCountMap.put(clazz, herbivoresCountMap.getOrDefault(clazz, 0) + 1);
-                    } else if (clazz.getName().contains("predators")) {
-                        predatorsCountMap.put(clazz, predatorsCountMap.getOrDefault(clazz, 0) + 1);
-                    }
-                }
+        List<Entity> entities = Stream.concat(island.getEntities().stream(), island.getKids().stream()).toList();
+
+        for (Entity entity:entities) {
+            Class<?> clazz = entity.getClass();
+            if (clazz.getName().contains("Plant")) {
+                plantsCountMap.put(clazz, plantsCountMap.getOrDefault(clazz, 0) + 1);
+            } else if (clazz.getName().contains("herbivores")) {
+                herbivoresCountMap.put(clazz, herbivoresCountMap.getOrDefault(clazz, 0) + 1);
+            } else if (clazz.getName().contains("predators")) {
+                predatorsCountMap.put(clazz, predatorsCountMap.getOrDefault(clazz, 0) + 1);
             }
         }
 
-        System.out.println("Statistics " + LocalTime.now());
+        LocalTime currentTime = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        System.out.println("Statistics " + currentTime.format(formatter));
+
         displayEntities(plantsCountMap, "Plants");
         displayEntities(herbivoresCountMap, "Herbivores");
         displayEntities(predatorsCountMap, "Predators");
         System.out.println("Born - " + Island.getBorn() + ", dead - " + Island.getDead());
         System.out.println("Number of threads - " + Thread.activeCount());
-        //displayMovingOfAnimals();
         System.out.println();
     }
 
@@ -73,17 +71,5 @@ public class StatisticsTask implements Runnable{
             }
         }
         System.out.println();
-    }
-
-    public void displayMovingOfAnimals() {
-        System.out.println();
-        for (int i = 0; i < island.getRows(); i++) {
-            for (int j = 0; j < island.getCols(); j++) {
-
-                int number = island.getLocation(i, j).getAnimals().size();
-                System.out.print(number + " ");
-            }
-            System.out.println();
-        }
     }
 }

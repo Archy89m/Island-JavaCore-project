@@ -41,7 +41,7 @@ public class EntityFactory {
                 field.setAccessible(true);
                 int value = (int) field.get(null);
 
-                value = value / 20 + 1;
+                value = value / 100 + 1;
 
                 Random random = new Random();
                 int numberOfEntities = random.nextInt(value + 1);

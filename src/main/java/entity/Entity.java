@@ -36,6 +36,7 @@ public abstract class Entity {
     }
 
     public void die() {
+
         isAlive = false;
         Island.increaseNumberOfDeaths();
     }
