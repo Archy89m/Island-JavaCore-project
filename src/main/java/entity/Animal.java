@@ -4,6 +4,8 @@ import entity.animals.Herbivore;
 import org.island.Location;
 import providers.EntityFactory;
 import providers.SettingsProvider;
+
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Animal extends Entity {
@@ -48,13 +50,12 @@ public abstract class Animal extends Entity {
         if (newI != currentLocation.getI() || newJ != currentLocation.getJ())
             setLocation(currentLocation.getIsland().getLocation(newI, newJ));
     }
-    public Entity reproduce(Entity partner) {
-
+    public Optional<Entity> reproduce(Entity partner) {
         boolean sex = ThreadLocalRandom.current().nextBoolean();
         if (sex)
-            return EntityFactory.reproduceAnimals(partner.getClass());
+            return Optional.ofNullable(EntityFactory.reproduceAnimals(partner.getClass()));
         else
-            return null;
+            return Optional.empty();
     }
     public Animal() {
         super();

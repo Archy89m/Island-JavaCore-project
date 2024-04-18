@@ -7,6 +7,7 @@ import org.island.Location;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
@@ -42,9 +43,9 @@ public class ReproduceTask implements Runnable{
         int maxNumber = maxOnCell - repList.size();
         if (maxNumber > 0) {
             Entity partner = repList.get(ThreadLocalRandom.current().nextInt(repList.size()));
-            Entity kid = animal.reproduce(partner);
-            if (kid != null) {
-                location.getIsland().addKid(kid);
+            Optional<Entity> kid = animal.reproduce(partner);
+            if (kid.isPresent()) {
+                location.getIsland().addKid(kid.get());
                 Island.increaseNumberOfBorn();
             }
         }
