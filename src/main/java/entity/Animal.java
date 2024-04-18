@@ -12,6 +12,7 @@ public abstract class Animal extends Entity {
     private final int MOVEMENT_SPEED;
     private final double AMOUNT_FOOD_FOR_SATIETY;
     private volatile double hungerLevel;
+    private final int HUNGER_RATE = 3;
     public Animal() {
         super();
         this.MOVEMENT_SPEED = SettingsProvider.getCharacteristics(
@@ -72,7 +73,7 @@ public abstract class Animal extends Entity {
             die();
             return;
         }
-        double hungerCount = AMOUNT_FOOD_FOR_SATIETY / 3;
+        double hungerCount = AMOUNT_FOOD_FOR_SATIETY / HUNGER_RATE;
         hungerLevel = hungerLevel - hungerCount;
     }
 }
