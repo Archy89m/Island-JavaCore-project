@@ -51,7 +51,7 @@ public class SettingsProvider {
         return finalMap;
     }
     public static List<String> getListHerbivoreAsFoodForHerbivores() {
-        List<Class<?>> herbivoresClasses = null;
+        List<Class<?>> herbivoresClasses;
         try {
             PackageScanner scanner = new PackageScanner();
             herbivoresClasses = scanner.getClasses("entity.animals.herbivores");
