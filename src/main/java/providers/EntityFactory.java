@@ -37,7 +37,7 @@ public class EntityFactory {
 
         if (!Modifier.isAbstract(clazz.getModifiers())) {
             try {
-                Field field = clazz.getDeclaredField("maxOnCell");
+                Field field = clazz.getDeclaredField("MAX_ON_CELL");
                 field.setAccessible(true);
                 int value = (int) field.get(null);
 

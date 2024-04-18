@@ -5,7 +5,7 @@ import providers.SettingsProvider;
 
 public class Goat extends Herbivore {
 
-    private static final int maxOnCell = SettingsProvider.
+    private static final int MAX_ON_CELL = SettingsProvider.
             getCharacteristics("Goat","maxOnCell").intValue();
 
     private static final String emoji = "🐐";
