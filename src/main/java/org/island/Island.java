@@ -61,16 +61,16 @@ public class Island {
     public Location getLocation(int row, int col) {
         return locations[row][col];
     }
-    public void startSimulation() {
+    void startSimulation() {
         scheduledExecutor = new ScheduledExecutor(this);
         scheduledExecutor.startBirthTask();
         scheduledExecutor.startClearingTask();
         scheduledExecutor.startStatisticsTask();
     }
-    public void stopSimulation() {
+    void stopSimulation() {
         scheduledExecutor.stopTasks();
     }
-    public synchronized void addKids(List<Entity> listKids) {
+    synchronized void addKids(List<Entity> listKids) {
         kids.addAll(listKids);
     }
     public synchronized void removeKids(List<Entity> listEntities) {
