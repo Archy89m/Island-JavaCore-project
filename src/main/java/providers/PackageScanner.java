@@ -8,6 +8,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 public class PackageScanner {
+    private static final int LENGTH_OF_NAME_CLASS_WITH_DOT = 6;
     List<Class<?>> getClasses(String packageName) throws IOException {
         String path = packageName.replace('.', '/');
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -38,7 +39,7 @@ public class PackageScanner {
                 classes.addAll(findClasses(file, packageName + "." + file.getName()));
             } else if (file.getName().endsWith(".class")) {
                 try {
-                    String className = packageName + '.' + file.getName().substring(0, file.getName().length() - 6);
+                    String className = packageName + '.' + file.getName().substring(0, file.getName().length() - LENGTH_OF_NAME_CLASS_WITH_DOT);
                     classes.add(Class.forName(className));
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
