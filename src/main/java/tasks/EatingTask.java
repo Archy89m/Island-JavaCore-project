@@ -12,16 +12,12 @@ import java.util.concurrent.TimeUnit;
 
 
 public class EatingTask implements Runnable{
-
     private final Animal animal;
-
     public EatingTask(Animal animal) {
         this.animal = animal;
     }
-
     @Override
     public void run() {
-
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 if (!animal.isAlive())
@@ -33,9 +29,7 @@ public class EatingTask implements Runnable{
             }
         }
     }
-
     private void eatingAction() {
-
         Entity prey;
         List<Entity> food;
         Location location = animal.getLocation();

@@ -7,16 +7,12 @@ import providers.SettingsProvider;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Animal extends Entity {
-
     private final int MOVEMENT_SPEED;
     private final double AMOUNT_FOOD_FOR_SATIETY;
     private volatile double hungerLevel;
-
     public void eat(Entity food) {
-
         if (hungerLevel >= AMOUNT_FOOD_FOR_SATIETY)
             return;
-
         if (food instanceof Herbivore || food instanceof Plant) {
 
             Number num = SettingsProvider.getEatingProbability(this.getClass().getSimpleName(), food.getClass().getSimpleName());
@@ -30,17 +26,12 @@ public abstract class Animal extends Entity {
             }
         }
     }
-
     public void move() {
-
         Location currentLocation = getLocation();
-
         int iMax = currentLocation.getIsland().getRows() - 1;
         int jMax = currentLocation.getIsland().getCols() - 1;
-
         int newI = currentLocation.getI();
         int newJ = currentLocation.getJ();
-
         int distance = ThreadLocalRandom.current().nextInt(MOVEMENT_SPEED + 1);
 
         for (int i = 0; i < distance; i++) {
@@ -57,7 +48,6 @@ public abstract class Animal extends Entity {
         if (newI != currentLocation.getI() || newJ != currentLocation.getJ())
             setLocation(currentLocation.getIsland().getLocation(newI, newJ));
     }
-
     public Entity reproduce(Entity partner) {
 
         boolean sex = ThreadLocalRandom.current().nextBoolean();
@@ -66,11 +56,8 @@ public abstract class Animal extends Entity {
         else
             return null;
     }
-
     public Animal() {
-
         super();
-
         this.MOVEMENT_SPEED = SettingsProvider.getCharacteristics(
                 this.getClass().getSimpleName(),
                 "movementSpeed").intValue();
@@ -79,9 +66,7 @@ public abstract class Animal extends Entity {
                 "amountFoodForSatiety").doubleValue();
         this.hungerLevel = this.AMOUNT_FOOD_FOR_SATIETY;
     }
-
     public void hunger() {
-
         if (hungerLevel <= 0 && isAlive()) {
             die();
             return;
