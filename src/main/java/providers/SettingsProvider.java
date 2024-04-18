@@ -11,22 +11,22 @@ import java.util.*;
 public class SettingsProvider {
     private static final String EATING_PROBABILITIES = "src\\main\\resources\\EatingProbabilities.yml";
     private static final String ENTITY_CHARACTERISTICS = "src\\main\\resources\\EntityCharacteristics.yml";
-    private static final Map<String, Map<String, Number>> tableEatingProbabilities;
-    private static final Map<String, Map<String, Number>> tableEntityCharacteristics;
+    private static final Map<String, Map<String, Number>> TABLE_EATING_PROBABILITIES;
+    private static final Map<String, Map<String, Number>> TABLE_ENTITY_CHARACTERISTICS;
 
     static {
         try {
-            tableEatingProbabilities = readDataFromYaml(EATING_PROBABILITIES);
-            tableEntityCharacteristics = readDataFromYaml(ENTITY_CHARACTERISTICS);
+            TABLE_EATING_PROBABILITIES = readDataFromYaml(EATING_PROBABILITIES);
+            TABLE_ENTITY_CHARACTERISTICS = readDataFromYaml(ENTITY_CHARACTERISTICS);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
     public static Number getEatingProbability(String predator, String prey) {
-        return tableEatingProbabilities.get(predator).get(prey);
+        return TABLE_EATING_PROBABILITIES.get(predator).get(prey);
     }
     public static Number getCharacteristics(String entity, String characteristic) {
-        return tableEntityCharacteristics.get(entity).get(characteristic);
+        return TABLE_ENTITY_CHARACTERISTICS.get(entity).get(characteristic);
     }
     private static Map<String, Map<String, Number>> readDataFromYaml(String fileName) throws IOException {
         LinkedHashMap<String, Map<String, ?>> originalMap;
@@ -50,9 +50,6 @@ public class SettingsProvider {
         }
         return finalMap;
     }
-    public static Map<String, Map<String, Number>> getTableEatingProbabilities() {
-        return tableEatingProbabilities;
-    }
     public static List<String> getListHerbivoreAsFoodForHerbivores() {
         List<Class<?>> herbivoresClasses = null;
         try {
@@ -65,9 +62,9 @@ public class SettingsProvider {
                 .map(Class::getSimpleName)
                 .toList();
         List<String> result = new ArrayList<>();
-        for (String predator : tableEatingProbabilities.keySet()) {
+        for (String predator : TABLE_EATING_PROBABILITIES.keySet()) {
             if (listHerbivores.contains(predator)) {
-                Map<String, Number> preyProbabilities = tableEatingProbabilities.get(predator);
+                Map<String, Number> preyProbabilities = TABLE_EATING_PROBABILITIES.get(predator);
 
                 for (String prey : preyProbabilities.keySet()) {
                     if (listHerbivores.contains(prey) && preyProbabilities.get(prey).intValue() > 0)
