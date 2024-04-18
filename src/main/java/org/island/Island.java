@@ -22,7 +22,7 @@ public class Island {
     private ScheduledExecutor scheduledExecutor = null;
     private static final AtomicInteger numberOfBorn = new AtomicInteger();
     private static final AtomicInteger numberOfDeaths = new AtomicInteger();
-    public Island() {
+    Island() {
         this.locations = new Location[ROWS][COLS];
         this.entities = new ArrayList<>();
         this.kids = new ArrayList<>();
