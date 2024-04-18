@@ -12,6 +12,16 @@ public abstract class Animal extends Entity {
     private final int MOVEMENT_SPEED;
     private final double AMOUNT_FOOD_FOR_SATIETY;
     private volatile double hungerLevel;
+    public Animal() {
+        super();
+        this.MOVEMENT_SPEED = SettingsProvider.getCharacteristics(
+                this.getClass().getSimpleName(),
+                "movementSpeed").intValue();
+        this.AMOUNT_FOOD_FOR_SATIETY = SettingsProvider.getCharacteristics(
+                this.getClass().getSimpleName(),
+                "amountFoodForSatiety").doubleValue();
+        this.hungerLevel = this.AMOUNT_FOOD_FOR_SATIETY;
+    }
     public void eat(Entity food) {
         if (hungerLevel >= AMOUNT_FOOD_FOR_SATIETY)
             return;
@@ -56,16 +66,6 @@ public abstract class Animal extends Entity {
             return Optional.ofNullable(EntityFactory.reproduceAnimals(partner.getClass()));
         else
             return Optional.empty();
-    }
-    public Animal() {
-        super();
-        this.MOVEMENT_SPEED = SettingsProvider.getCharacteristics(
-                this.getClass().getSimpleName(),
-                "movementSpeed").intValue();
-        this.AMOUNT_FOOD_FOR_SATIETY = SettingsProvider.getCharacteristics(
-                this.getClass().getSimpleName(),
-                "amountFoodForSatiety").doubleValue();
-        this.hungerLevel = this.AMOUNT_FOOD_FOR_SATIETY;
     }
     public void hunger() {
         if (hungerLevel <= 0 && isAlive()) {
