@@ -8,7 +8,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 public class PackageScanner {
-    public List<Class<?>> getClasses(String packageName) throws IOException {
+    List<Class<?>> getClasses(String packageName) throws IOException {
         String path = packageName.replace('.', '/');
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Enumeration<URL> resources = classLoader.getResources(path);
