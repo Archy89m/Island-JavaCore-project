@@ -39,7 +39,7 @@ public class ReproduceTask implements Runnable{
         int maxOnCell;
 
         try {
-            Field field = animal.getClass().getDeclaredField("maxOnCell");
+            Field field = animal.getClass().getDeclaredField("MAX_ON_CELL");
             field.setAccessible(true);
             maxOnCell = (int) field.get(null);
         } catch (NoSuchFieldException | IllegalAccessException e) {

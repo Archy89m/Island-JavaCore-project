@@ -61,7 +61,7 @@ public class StatisticsTask implements Runnable{
 
         for (Map.Entry<Class<?>, Integer> entry : entities.entrySet()) {
             try {
-                Field field = entry.getKey().getDeclaredField("emoji");
+                Field field = entry.getKey().getDeclaredField("EMOJI");
                 field.setAccessible(true);
                 String emoji = (String) field.get(null);
                 NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());

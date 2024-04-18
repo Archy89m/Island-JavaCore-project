@@ -15,8 +15,8 @@ import java.util.stream.Stream;
 
 public class Island {
 
-    private final int rows = 20;
-    private final int cols = 40;
+    private final int ROWS = 10;
+    private final int COLS = 20;
     private final Location[][] locations;
     private final List<Entity> kids;
     private final List<Entity> entities;
@@ -26,7 +26,7 @@ public class Island {
 
     public Island() {
 
-        this.locations = new Location[rows][cols];
+        this.locations = new Location[ROWS][COLS];
         this.entities = new ArrayList<>();
         this.kids = new ArrayList<>();
         initializeLocations();
@@ -35,11 +35,11 @@ public class Island {
     }
 
     public int getRows() {
-        return rows;
+        return ROWS;
     }
 
     public int getCols() {
-        return cols;
+        return COLS;
     }
 
     public static void increaseNumberOfBorn() {
@@ -60,8 +60,8 @@ public class Island {
 
     private void initializeLocations() {
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
                 locations[i][j] = new Location(this, i, j);
             }
         }

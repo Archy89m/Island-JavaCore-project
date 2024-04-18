@@ -7,29 +7,29 @@ import java.util.List;
 
 public class Location {
 
-    private final Island island;
-    private final int i;
-    private final int j;
+    private final Island ISLAND;
+    private final int I;
+    private final int J;
 
     public Location(Island island, int i, int j) {
 
-        this.island = island;
-        this.i = i;
-        this.j = j;
+        this.ISLAND = island;
+        this.I = i;
+        this.J = j;
 
         initializeEntities();
     }
 
     public Island getIsland() {
-        return island;
+        return ISLAND;
     }
 
     public int getI() {
-        return i;
+        return I;
     }
 
     public int getJ() {
-        return j;
+        return J;
     }
 
     private void initializeEntities() {
@@ -39,6 +39,6 @@ public class Location {
         for (Entity newEntity:newEntities)
             newEntity.setLocation(this);
 
-        island.addKids(newEntities);
+        ISLAND.addKids(newEntities);
     }
 }
