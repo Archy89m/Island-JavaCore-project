@@ -13,3 +13,12 @@ All main task requirements have been fulfilled:
 
 Additional requirements:
 -Island parameters are placed in a separate location, animal parameters are represented in a file that can be easily modified and replaced."
+
+Launch parameters:
+- Run on: Local machine;
+- Main class: org.island.App;
+- SDK: java 18
+
+App parameters:
+- Eating probabilities: src/main/resources/EatingProbabilities.yml
+- Entity characteristics: src/main/resources/EntityCharacteristics.yml
