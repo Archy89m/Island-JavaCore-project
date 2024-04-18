@@ -8,13 +8,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Animal extends Entity {
 
-    private final int movementSpeed;
-    private final double amountFoodForSatiety;
+    private final int MOVEMENT_SPEED;
+    private final double AMOUNT_FOOD_FOR_SATIETY;
     private volatile double hungerLevel;
 
     public void eat(Entity food) {
 
-        if (hungerLevel >= amountFoodForSatiety)
+        if (hungerLevel >= AMOUNT_FOOD_FOR_SATIETY)
             return;
 
         if (food instanceof Herbivore || food instanceof Plant) {
@@ -41,7 +41,7 @@ public abstract class Animal extends Entity {
         int newI = currentLocation.getI();
         int newJ = currentLocation.getJ();
 
-        int distance = ThreadLocalRandom.current().nextInt(movementSpeed + 1);
+        int distance = ThreadLocalRandom.current().nextInt(MOVEMENT_SPEED + 1);
 
         for (int i = 0; i < distance; i++) {
             if (ThreadLocalRandom.current().nextBoolean()) {
@@ -71,13 +71,13 @@ public abstract class Animal extends Entity {
 
         super();
 
-        this.movementSpeed = SettingsProvider.getCharacteristics(
+        this.MOVEMENT_SPEED = SettingsProvider.getCharacteristics(
                 this.getClass().getSimpleName(),
                 "movementSpeed").intValue();
-        this.amountFoodForSatiety = SettingsProvider.getCharacteristics(
+        this.AMOUNT_FOOD_FOR_SATIETY = SettingsProvider.getCharacteristics(
                 this.getClass().getSimpleName(),
                 "amountFoodForSatiety").doubleValue();
-        this.hungerLevel = this.amountFoodForSatiety;
+        this.hungerLevel = this.AMOUNT_FOOD_FOR_SATIETY;
     }
 
     public void hunger() {
@@ -86,7 +86,7 @@ public abstract class Animal extends Entity {
             die();
             return;
         }
-        double hungerCount = amountFoodForSatiety / 3;
+        double hungerCount = AMOUNT_FOOD_FOR_SATIETY / 3;
         hungerLevel = hungerLevel - hungerCount;
     }
 }
