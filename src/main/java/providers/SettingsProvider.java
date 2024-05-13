@@ -9,6 +9,7 @@ import java.util.*;
 
 
 public class SettingsProvider {
+
     private static final String EATING_PROBABILITIES = "src\\main\\resources\\EatingProbabilities.yml";
     private static final String ENTITY_CHARACTERISTICS = "src\\main\\resources\\EntityCharacteristics.yml";
     private static final Map<String, Map<String, Number>> TABLE_EATING_PROBABILITIES;
@@ -22,13 +23,17 @@ public class SettingsProvider {
             throw new RuntimeException(e);
         }
     }
+
     public static Number getEatingProbability(String predator, String prey) {
         return TABLE_EATING_PROBABILITIES.get(predator).get(prey);
     }
+
     public static Number getCharacteristics(String entity, String characteristic) {
         return TABLE_ENTITY_CHARACTERISTICS.get(entity).get(characteristic);
     }
+
     private static Map<String, Map<String, Number>> readDataFromYaml(String fileName) throws IOException {
+
         LinkedHashMap<String, Map<String, ?>> originalMap;
         Yaml yaml = new Yaml();
         try (InputStream inputStream = new FileInputStream(fileName)) {
@@ -50,7 +55,9 @@ public class SettingsProvider {
         }
         return finalMap;
     }
+
     public static List<String> getListHerbivoreAsFoodForHerbivores() {
+
         List<Class<?>> herbivoresClasses;
         try {
             PackageScanner scanner = new PackageScanner();

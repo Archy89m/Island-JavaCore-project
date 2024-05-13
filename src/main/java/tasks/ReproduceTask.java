@@ -12,12 +12,16 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 public class ReproduceTask implements Runnable{
+
     private final Animal animal;
+
     public ReproduceTask(Animal animal) {
         this.animal = animal;
     }
+
     @Override
     public void run() {
+
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 if (!animal.isAlive())
@@ -29,7 +33,9 @@ public class ReproduceTask implements Runnable{
             }
         }
     }
+
     public void reproduceAction() {
+
         Location location = animal.getLocation();
         List<Entity> repList = location.getIsland().getAnimalOfClass(animal.getClass(), location);
         int maxOnCell;

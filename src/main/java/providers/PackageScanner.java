@@ -8,23 +8,32 @@ import java.util.Enumeration;
 import java.util.List;
 
 public class PackageScanner {
+
     private static final int LENGTH_OF_NAME_CLASS_WITH_DOT = 6;
+
     List<Class<?>> getClasses(String packageName) throws IOException {
+
         String path = packageName.replace('.', '/');
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Enumeration<URL> resources = classLoader.getResources(path);
         List<File> directories = new ArrayList<>();
+
         while (resources.hasMoreElements()) {
             URL resource = resources.nextElement();
             directories.add(new File(resource.getFile()));
         }
+
         List<Class<?>> classes = new ArrayList<>();
+
         for (File directory : directories) {
             classes.addAll(findClasses(directory, packageName));
         }
+
         return classes;
     }
+
     private List<Class<?>> findClasses(File directory, String packageName) {
+
         List<Class<?>> classes = new ArrayList<>();
         if (!directory.exists()) {
             return classes;
