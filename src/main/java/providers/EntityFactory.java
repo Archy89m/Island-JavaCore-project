@@ -15,8 +15,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 public class EntityFactory {
+
     public static List<Entity> createEntities()  {
+
         List<Entity> entities = new ArrayList<>();
+
         try {
             PackageScanner scanner = new PackageScanner();
             List<Class<?>> classes = scanner.getClasses("entity");
@@ -27,9 +30,12 @@ public class EntityFactory {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
         return entities;
     }
+
     public static void addEntitiesToList(Class<?> clazz, List<Entity> entities) {
+
         if (!Modifier.isAbstract(clazz.getModifiers())) {
             try {
                 Field field = clazz.getDeclaredField("MAX_ON_CELL");
@@ -48,7 +54,9 @@ public class EntityFactory {
             }
         }
     }
+
     public static Entity reproduceAnimals(Class<?> clazz)  {
+
         Entity entity = null;
         try {
             entity = (Entity) clazz.getDeclaredConstructor().newInstance();
@@ -58,14 +66,18 @@ public class EntityFactory {
         }
         return entity;
     }
+
     public static List<Entity> growPlants(int maxNumber) {
+
         List<Entity> plants = new ArrayList<>();
         int numberOfPlants = ThreadLocalRandom.current().nextInt(maxNumber + 1);
+
         for (int i = 0; i < numberOfPlants; i++) {
             Entity plant = new Plant();
             plants.add(plant);
             Island.increaseNumberOfBorn();
         }
+
         return plants;
     }
 }

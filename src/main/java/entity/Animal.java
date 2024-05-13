@@ -9,12 +9,16 @@ import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Animal extends Entity {
+
     private final int MOVEMENT_SPEED;
     private final double AMOUNT_FOOD_FOR_SATIETY;
     private volatile double hungerLevel;
     private final int HUNGER_RATE = 3;
+
     public Animal() {
+
         super();
+
         this.MOVEMENT_SPEED = SettingsProvider.getCharacteristics(
                 this.getClass().getSimpleName(),
                 "movementSpeed").intValue();
@@ -23,7 +27,9 @@ public abstract class Animal extends Entity {
                 "amountFoodForSatiety").doubleValue();
         this.hungerLevel = this.AMOUNT_FOOD_FOR_SATIETY;
     }
+
     public void eat(Entity food) {
+
         if (hungerLevel >= AMOUNT_FOOD_FOR_SATIETY)
             return;
         if (food instanceof Herbivore || food instanceof Plant) {
@@ -39,8 +45,11 @@ public abstract class Animal extends Entity {
             }
         }
     }
+
     public void move() {
+
         Location currentLocation = getLocation();
+
         int iMax = currentLocation.getIsland().getRows() - 1;
         int jMax = currentLocation.getIsland().getCols() - 1;
         int newI = currentLocation.getI();
@@ -58,17 +67,23 @@ public abstract class Animal extends Entity {
                     newJ = 0;
             }
         }
+
         if (newI != currentLocation.getI() || newJ != currentLocation.getJ())
             setLocation(currentLocation.getIsland().getLocation(newI, newJ));
     }
+
     public Optional<Entity> reproduce(Entity partner) {
+
         boolean sex = ThreadLocalRandom.current().nextBoolean();
+
         if (sex)
             return Optional.ofNullable(EntityFactory.reproduceAnimals(partner.getClass()));
         else
             return Optional.empty();
     }
+
     public void hunger() {
+
         if (hungerLevel <= 0 && isAlive()) {
             die();
             return;

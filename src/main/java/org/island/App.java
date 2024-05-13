@@ -5,7 +5,9 @@ import java.util.concurrent.TimeUnit;
 
 
 public class App {
+
     public static void main(String[] args) {
+
         Island island = new Island();
         island.startSimulation();
 
@@ -15,6 +17,7 @@ public class App {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
         island.stopSimulation();
     }
 }
